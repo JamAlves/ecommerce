@@ -4,7 +4,7 @@ namespace Hcode\DB;
 
 class Sql {
 
-	const HOSTNAME = "127.0.0.1";
+	const HOSTNAME = "127.0.0.1";    //127.0.0.1:
 	const USERNAME = "root";
 	const PASSWORD = "";
 	const DBNAME = "db_ecommerce";
@@ -47,7 +47,7 @@ class Sql {
 
 		$this->setParams($stmt, $params);
 
-		$stmt->execute();
+		return $stmt->execute();
 
 	}
 
@@ -58,7 +58,7 @@ class Sql {
 
 		$this->setParams($stmt, $params);
 
-		$stmt->execute();
+	    $stmt->execute();
 
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
