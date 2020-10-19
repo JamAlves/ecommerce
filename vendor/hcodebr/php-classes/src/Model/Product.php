@@ -4,6 +4,7 @@ namespace Hcode\Model;
 
 use \Hcode\DB\Sql;
 use \Hcode\Model;
+use \Hcode\Mailer;
 
 class Product extends Model {
 
@@ -15,7 +16,21 @@ class Product extends Model {
 
         return $sql->select("SELECT * FROM tb_products ORDER BY desproduct");
 
-  }     
+  }
+
+  public static function checkList($list)
+  {
+      foreach ($list as &$row){
+
+          $p = new Product();
+          $p->setData($row);
+          $row = $p->getValues();
+      
+      }
+
+      return $list;
+
+  }
 
   public function save()  
   {
@@ -68,22 +83,23 @@ class Product extends Model {
 
   }
   
-  public function checkPhoto()
+   public function checkPhoto()
   {
     
-      if(file_exists($_SERVER['DOCUMENT_ROOT']  . DIRECTORY_SEPARATOR .
+      if(file_exists(
+        $_SERVER['DOCUMENT_ROOT']  . DIRECTORY_SEPARATOR .
         "res" . DIRECTORY_SEPARATOR . 
         "site" . DIRECTORY_SEPARATOR .
         "img" .  DIRECTORY_SEPARATOR . 
         "products" . DIRECTORY_SEPARATOR .
         $this->getidproduct() . ".jpg"
-        )){
+        )) {
         
-       $url = "/res/site/img/products/" . $this->getidproduct() . ".jpg";
+        $url = "/res/site/img/products/" . $this->getidproduct() . ".jpg";
 
-      } else{
+      } else {
         
-       $url = "/res/site/img/product.jpg";
+          $url = "/res/site/img/product.jpg";
 
       }
 
@@ -91,8 +107,9 @@ class Product extends Model {
 
   }
 
-  public function getValues()
-  {
+   public function getValues()
+   
+  { 
     
     $this->checkPhoto();
 
@@ -125,7 +142,7 @@ class Product extends Model {
 
     }
 
-     $dist = $_SERVER['DOCUMENT_ROOT']  . DIRECTORY_SEPARATOR .
+    $dist = $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR .
         "res" . DIRECTORY_SEPARATOR . 
         "site" . DIRECTORY_SEPARATOR .
         "img" .  DIRECTORY_SEPARATOR . 
