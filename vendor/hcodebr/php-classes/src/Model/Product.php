@@ -31,6 +31,7 @@ class Product extends Model {
       return $list;
 
   }
+  
 
   public function save()  
   {
