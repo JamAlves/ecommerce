@@ -4,6 +4,8 @@ namespace Hcode\Model;
 
 use \Hcode\DB\Sql;
 use \Hcode\Model;
+use \Hcode\Mailer;
+
 
 class Category extends Model {
 
@@ -41,7 +43,7 @@ class Category extends Model {
 
      ]);
 
-     $this->setData($results[0]);
+      $this->setData($results[0]);
 
   }
 
