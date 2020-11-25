@@ -97,8 +97,7 @@ class User extends Model {
     public static function verifyLogin($inadmin = true)
     {
         if (User::checkLogin($inadmin)) {
-
-         
+          
             header("Location: /admin/login");
             exit;  
         }
