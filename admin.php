@@ -2,17 +2,15 @@
 
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
-//use \Hcode\Model\Products;
 
-
-$app->get('/', function() {
+/*$app->get('/', function() {
     
     $page = new Page();
 
     $page->setTpl("index");
 
 });
-
+*/
 $app->get('/admin', function() {
     
     User::verifyLogin();
