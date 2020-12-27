@@ -1,6 +1,6 @@
 <?php 
 
-namespace Hcode\Model;
+namespace Hcode\Model; 
 
 use \Hcode\DB\Sql;
 use \Hcode\Model;
@@ -67,7 +67,7 @@ class User extends Model {
 
     $sql = new Sql();
 
-     $results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
+    $results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
       ":LOGIN"=>$login
     )); 
 
@@ -236,15 +236,14 @@ class User extends Model {
         $dataRecovery = $results2[0];
 
         $code = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, User::SECRET, $dataRecovery["idrecovery"], MCRYPT_MODE_ECB));
-        //var_dump($dataRecovery);
 
         if ($inadmin === true) {
           
-            $link = "http://www.hcodecommerce.com.br/admin/forgot/reset?code=$code";
+          $link = "http://www.hcodecommerce.com.br/admin/forgot/reset?code=$code";
 
-        }else{ 
+        } else {
 
-           $link = "http://www.hcodecommerce.com.br/forgot/reset?code=$code";
+          $link = "http://www.hcodecommerce.com.br/forgot/reset?code=$code";
 
         }
 
@@ -284,7 +283,7 @@ class User extends Model {
           AND
           DATE_ADD(a.dtregister, INTERVAL 1 HOUR) >= NOW();
     ", array(
-          ":idrecovery"=>$idrecovery
+      ":idrecovery"=>$idrecovery
     ));
 
     if (count($results) === 0)
@@ -419,8 +418,6 @@ class User extends Model {
     ]);
 
   }
+}
 
- }
-
-
-  ?>
+?>
