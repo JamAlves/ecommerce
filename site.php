@@ -200,31 +200,33 @@ $app->post("/checkout", function(){
         header('Location: /checkout');
         exit;
     }
-     if (!isset($_POST['desaddress']) || $_POST['desaddress'] === '') {
+    if (!isset($_POST['desaddress']) || $_POST['desaddress'] === '') {
         Address::setMsgError("Informe o endereço.");
         header('Location: /checkout');
         exit;
     }
-      if (!isset($_POST['desnumber']) || $_POST['desnumber'] === '') {
-      Address::setMsgError("Informe o número do endereço.");
-      header("Location: /checkout");
-      exit;
+    if (!isset($_POST['desnumber']) || $_POST['desnumber'] === '') {
+          Address::setMsgError("Informe o número do endereço.");
+          header("Location: /checkout");
+          exit;
       
-     if (!isset($_POST['desdistrict']) || $_POST['desdistrict'] === '') {
-        Address::setMsgError("Informe o Bairro.");
-        header('Location: /checkout');
-        exit;
+    if (!isset($_POST['desdistrict']) || $_POST['desdistrict'] === '') {
+          Address::setMsgError("Informe o Bairro.");
+          header('Location: /checkout');
+          exit;
     }
+
     if (!isset($_POST['descity']) || $_POST['descity'] === '') {
-        Address::setMsgError("Informe a Cidade.");
-        header('Location: /checkout');
-        exit;
+          Address::setMsgError("Informe a Cidade.");
+          header('Location: /checkout');
+          exit;
     }
     if (!isset($_POST['desstate']) || $_POST['desstate'] === '') {
-        Address::setMsgError("Informe o Estado.");
-        header('Location: /checkout');
-        exit;
+          Address::setMsgError("Informe o Estado.");
+          header('Location: /checkout');
+          exit;
     }
+
     if (!isset($_POST['descountry']) || $_POST['descountry'] === '') {
         Address::setMsgError("Informe o Pais.");
         header('Location: /checkout');
@@ -259,12 +261,13 @@ $app->post("/checkout", function(){
       
     ]);
 
+    
     $order->save();
     
     header("Location: /order/".$order->getidorder());
     exit;
+  });
    
-});
 
 $app->get("/login", function(){
 
@@ -612,6 +615,71 @@ $app->get("/profile/orders/:idorder", function($idorder){
      'products'=>$cart->getProducts() 
      
    ]);
+
+});
+
+$app->get("/profile/change-password", function(){
+    User:: verifyLogin(false);
+
+    $page = new Page();
+
+    $page->setTpl("profile-change-password",[
+
+       'changePassError'=>User::getError(),
+       'changePassSucesso'=>User::getSuccess()
+
+    ]);
+   
+});
+
+$app->post("/profile/change-password", function(){
+    
+    User::verifyLogin(false);
+
+    if (isset($_POST['current_pass'])|| $_POST['current_pass'] === '') {
+       
+       User::setError("Digite a senha atual.");
+       header("Location: /profile/chenge-password");
+       exit;
+    }
+    if (isset($_POST['new_pass'])|| $_POST['new_pass'] === '') {
+       
+       User::setError("Digite a nova senha.");
+       header("Location: /profile/chenge-password");
+       exit;
+    }
+    if (isset($_POST['new_pass_confirm'])|| $_POST['current_pass'] === '') {
+       
+       User::setError("confirme a nova senha .");
+       header("Location: /profile/chenge-password");
+       exit;
+    }
+
+    if ($_POST['current_pass'] === $_POST['new_pass']) {
+      
+       User::setError("A sua nova senha deve ser diferente da atual.");
+       header("Location: /profile/chenge-password");
+       exit;
+    }
+
+    $user = User::getFromSession();
+
+    if (!password_verify($_POST['current_pass'], $user->getdespassword())) {
+       
+       User::setError("A senha esta invalida.");
+       header("Location: /profile/chenge-password");
+       exit;
+
+    }
+
+    $user->setdespassword($_POST['new_pass']);
+
+    $user->update();
+
+    User::setSuccess("Senha alterada com sucesso");
+    
+    header("Location: /profile/chenge-password");
+    exit;
 
 });
 
