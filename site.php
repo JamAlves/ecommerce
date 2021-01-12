@@ -191,7 +191,8 @@ $app->get("/checkout", function(){
 
 });
 
-$app->post("/checkout", function(){
+$app->post("/checkout", function()
+{
     
     User::verifyLogin(false);
     
@@ -209,7 +210,7 @@ $app->post("/checkout", function(){
           Address::setMsgError("Informe o número do endereço.");
           header("Location: /checkout");
           exit;
-      
+    } 
     if (!isset($_POST['desdistrict']) || $_POST['desdistrict'] === '') {
           Address::setMsgError("Informe o Bairro.");
           header('Location: /checkout');
@@ -233,7 +234,6 @@ $app->post("/checkout", function(){
         exit;
     }
     
-
     $user = User::getFromSession();
 
     $address = new Address();
@@ -257,23 +257,22 @@ $app->post("/checkout", function(){
        'idaddress'=>$address->getidaddress(),
        'iduser'=>$user->getiduser(),
        'idstatus'=>OrderStatus::EM_ABERTO,
-       'vltotal'=>$cart->getvltotal()
-      
+       'vltotal'=>$cart->getvltotal() 
     ]);
 
-    
     $order->save();
     
-    header("Location: /order/".$order->getidorder());
-    exit;
-  });
-   
+   header("Location: /order/".$order->getidorder());
+   exit;
+
+});
+ 
 
 $app->get("/login", function(){
 
-$page = new Page();
+  $page = new Page();
  
-$page->setTpl("login", [
+  $page->setTpl("login", [
      'error'=>User::getError(),
      'errorRegister'=>User::getErrorRegister(),
      'registerValues'=>(isset($_SESSION['registerValues'])) ? $_SESSION['registerValues'] : ['name'=>'','email'=>'','phone'=>'']
