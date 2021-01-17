@@ -40,11 +40,11 @@ $app->get("/admin/users",function(){
 
     $page = new PageAdmin();
 
-    $page->setTpl("users", array(
+    $page->setTpl("categories", [
         "users"=>$pagination['data'],
         "search"=>$search,
         "pages"=>$pages
-    ));
+    ]);
 
 
 });
