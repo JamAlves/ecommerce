@@ -223,7 +223,7 @@ class Product extends Model {
         ORDER BY desproduct
         LIMIT $start, $itemsPerPage;
       ",[
-         'search'=>'%'.$search.'%'
+          ':search'=>'%'.$search.'%'
       ]);
 
 
